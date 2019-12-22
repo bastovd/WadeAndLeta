@@ -32,7 +32,6 @@ public class LinearSignalProcessor : MonoBehaviour
     }
 
     private Queue<SignalTick> signal;
-    private int currIndex = 0;
 
     private void Awake() {
         if (DebugGenerate) GenerateDebugSignal();

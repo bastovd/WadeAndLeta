@@ -24,7 +24,6 @@ public class WaveAnimatable : MonoBehaviour
     }
 
     public void SetWaveHeight(float v) {
-        // material is shared between gameobjects, so maybe this works?
         foreach (var r in renderers) {
             r.material.SetFloat("_Amount", v);
         }

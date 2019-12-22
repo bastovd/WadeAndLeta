@@ -20,10 +20,12 @@ public class FloatAnimator : MonoBehaviour {
     public Ease EaseForward = Ease.Linear;
     public AnimationCurve CurveForward;
     public float DurationForward = 0; // instant
+    public float DelayForward = 0;
     [Space]
     public Ease EaseBack = Ease.Linear;
     public AnimationCurve CurveBack;
     public float DurationBack = 0; // instant
+    public float DelayBack = 0;
     [Space]
     public UnityEvent onBegin = null;
     public ExtendedUnityEvents.FloatUnityEvent onUpdate = null;
@@ -46,14 +48,17 @@ public class FloatAnimator : MonoBehaviour {
         DurationBack = val;
     }
 
+    private void Awake() {
+        value = BeginValue;
+    }
+
     public void AnimateForward() {
-        if (tween != null) tween.Kill(true);
         switch (TransitionType) {
             case Transition.Ease:
-                tween = DOTween.To(() => value, x => value = x, EndValue, DurationForward).SetEase(EaseForward);
+                tween = DOTween.To(() => value, x => value = x, EndValue, DurationForward).SetEase(EaseForward).SetDelay(DelayForward);
                 break;
             case Transition.AnimationCurve:
-                tween = DOTween.To(() => value, x => value = x, EndValue, DurationForward).SetEase(CurveForward);
+                tween = DOTween.To(() => value, x => value = x, EndValue, DurationForward).SetEase(CurveForward).SetDelay(DelayForward);
                 break;
         }
 
@@ -63,10 +68,10 @@ public class FloatAnimator : MonoBehaviour {
     public void AnimateBack() {
         switch (TransitionType) {
             case Transition.Ease:
-                tween = DOTween.To(() => value, x => value = x, BeginValue, DurationBack).SetEase(EaseBack);
+                tween = DOTween.To(() => value, x => value = x, BeginValue, DurationBack).SetEase(EaseBack).SetDelay(DelayBack);
                 break;
             case Transition.AnimationCurve:
-                tween = DOTween.To(() => value, x => value = x, BeginValue, DurationBack).SetEase(CurveBack);
+                tween = DOTween.To(() => value, x => value = x, BeginValue, DurationBack).SetEase(CurveBack).SetDelay(DelayBack);
                 break;
         }
 

@@ -6,26 +6,22 @@ using UnityEngine.Events;
 using UnityEditor;
 #endif
 
-public class FogAnimatable : MonoBehaviour
-{
+public class ObjectSizeAnimatable : MonoBehaviour {
     public UnityEvent Trigger;
 
-    public void SetFogDensity(float v) {
-        RenderSettings.fogDensity = v;
-    }
-
-    public void DoTrigger() {
-        Trigger?.Invoke();
+    public void SetScale(float v) {
+        transform.localScale = new Vector3(v, v, v);
     }
 }
 
 #if UNITY_EDITOR
-[CustomEditor(typeof(FogAnimatable))]
-public class FogAnimatableEditor : Editor {
-    FogAnimatable _target;
+[CanEditMultipleObjects]
+[CustomEditor(typeof(ObjectSizeAnimatable))]
+public class ObjectSizeAnimatableEditor : Editor {
+    ObjectSizeAnimatable _target;
 
     private void OnEnable() {
-        _target = (FogAnimatable)target;
+        _target = (ObjectSizeAnimatable)target;
     }
 
     public override void OnInspectorGUI() {
@@ -33,7 +29,7 @@ public class FogAnimatableEditor : Editor {
 
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("DEBUG");
-        if (GUILayout.Button("Trigger Fog")) {
+        if (GUILayout.Button("Trigger Wave")) {
             _target.Trigger?.Invoke();
         }
     }
